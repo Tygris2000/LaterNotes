@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LaterNotes</string>
+    <string name="topbartitle">Things to remember:</string>
+    <string name="hello">helo</string>
+    <string name="addsomethingtoremember">Add something to remember</string>
+    <string name="addnote">Add note</string>
+</resources>
