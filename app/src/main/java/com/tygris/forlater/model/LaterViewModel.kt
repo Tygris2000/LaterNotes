@@ -13,16 +13,25 @@ class LaterViewModel(application: Application) : AndroidViewModel(application) {
     val repoi : Reposit = Reposit.getInstance()
 
     init {
-        val prefref = UserPrefs.init(application.applicationContext)
+         UserPrefs.init(application.applicationContext)
     }
 
 
     fun getAll() : LiveData<List<SomethingForLater>> = repoi.getAll()
+    fun searchEnteries(title: String) : LiveData<List<SomethingForLater>> = repoi.search(title)
     fun insertNew(something : SomethingForLater){
         viewModelScope.launch(Dispatchers.IO){
             repoi.insert(something)
         }
     }
+    fun delete(something : SomethingForLater){
+        viewModelScope.launch(Dispatchers.IO){
+            repoi.delete(something)
+        }
+    }
+
+
+
     fun mTheme() : Int{
         return when (UserPrefs.isContain("isdark")){
             UserPrefs.isContain("isdark") && UserPrefs.getboolean("isdark") -> 1
@@ -30,4 +39,5 @@ class LaterViewModel(application: Application) : AndroidViewModel(application) {
             else -> -1
         }
     }
+
 }

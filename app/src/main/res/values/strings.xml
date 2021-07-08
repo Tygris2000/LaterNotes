@@ -1,7 +1,14 @@
 <resources>
     <string name="app_name">LaterNotes</string>
     <string name="topbartitle">Things to remember:</string>
-    <string name="hello">helo</string>
-    <string name="addsomethingtoremember">Add something to remember</string>
+    <string name="hello">hello</string>
+    <string name = "Note">Note</string>
+    <string name="setAlarm">Set alarm on a date</string>
+    <string name="addsomethingtoremember">something to remember</string>
     <string name="addnote">Add note</string>
+    <string name="cancelAddition">Cancel the creation of new Note</string>
+    <string name="Cancel">Cancel</string>
+    <string name="add">Add</string>
+    <string name="EditNote">Edit Note</string>
+    <string name="DeleteNote">Delete Note</string>
 </resources>

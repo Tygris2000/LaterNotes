@@ -1,32 +1,51 @@
 package com.tygris.forlater.presentation
 
+import android.app.Application
+import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
+import com.tygris.forlater.R
+import com.tygris.forlater.data.Reposit
+import com.tygris.forlater.model.LaterViewModel
 import com.tygris.forlater.model.SomethingForLater
 import com.tygris.forlater.ui.theme.ForLaterTheme
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 @ExperimentalAnimationApi
 @Composable
-fun Greeting(listy : List<SomethingForLater>) {
+fun CardList(listy : List<SomethingForLater>) {
     val somethingForLater = SomethingForLater(0,"Some task",null)
-    LazyColumn() {
-        items(listy){message->
-            DisplayCard(somethingForLater = message)
+    Column() {
+
+        LazyColumn() {
+            items(listy){message->
+                DisplayCard(somethingForLater = message)
+            }
         }
     }
 
@@ -78,18 +97,17 @@ fun DisplayCard(somethingForLater: SomethingForLater){
             Row(modifier = Modifier.wrapContentSize()){
                 AnimatedVisibility(visible = expanded) {
                     Row{
-                        Button(onClick = { /*TODO*/ }) {
-                            Text(text = "Edit",
-                                Modifier
-                                    .padding(3.dp)
-                                    .wrapContentSize())
+/*Edit Button*/       IconButton(onClick = {}) {
+                          Icon(Icons.Outlined.Edit,
+                              contentDescription = stringResource(R.string.EditNote))
                         }
-                        Button(onClick = { /*TODO*/ }) {
-                            Text(text = "Delete",
-                                Modifier
-                                    .padding(3.dp)
-                                    .wrapContentSize()
-                                    .absolutePadding(3.dp))
+                        IconButton(onClick = {
+                            deleteNote(somethingForLater)
+                        }
+                        ) {
+                            Icon(Icons.Outlined.Delete,
+                                contentDescription = stringResource(
+                                    R.string.DeleteNote))
                         }
                     }
                 }
@@ -97,7 +115,15 @@ fun DisplayCard(somethingForLater: SomethingForLater){
         }
     }
 }
-
+fun editNote(){
+ /*todo: TO BE IMPLEMENTED*/
+}
+fun deleteNote(somethingForLater: SomethingForLater){
+    val repoI = Reposit.getInstance()
+    GlobalScope.launch {
+        repoI.delete(somethingForLater)
+    }
+}
 fun dateConverter(date: Date?): String{
     val formatString = "d EEE, MMM yyyy h:mm a"
     val locale = Locale.getDefault()
@@ -114,12 +140,9 @@ fun dateConverter(date: Date?): String{
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    val somet = SomethingForLater(0, "some Task", null)
+
     val someta = SomethingForLater(0, "some Task with alarm ", Date())
-
-       ForLaterTheme() {
-           //testCard(somet)
-           DisplayCard(somethingForLater = someta)
-
-       }
+    ForLaterTheme() {
+     DisplayCard(somethingForLater = someta)
+}
 }

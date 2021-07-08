@@ -6,8 +6,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
@@ -54,7 +52,7 @@ fun ForLaterTheme( value : Int = -1,darkTheme: Boolean = isSystemInDarkTheme()
     }
     systemUiController.setSystemBarsColor(
         color = colors.primaryVariant,
-        darkIcons = useDarkIcons
+        darkIcons = ! useDarkIcons
     )
 
 
